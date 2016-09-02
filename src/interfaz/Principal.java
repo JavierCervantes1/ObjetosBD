@@ -10,13 +10,18 @@ package interfaz;
  * @author Jcervant23
  */
 import clases.Persona;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
-    Persona v[] = new Persona[5];
+    ArrayList<Persona> v = new ArrayList();
+    int cont = 0;
+    //Persona v[] = new Persona[5];
+
     public Principal() {
         initComponents();
     }
@@ -44,7 +49,7 @@ public class Principal extends javax.swing.JFrame {
         cmdLimpiar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtResultado = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,8 +111,18 @@ public class Principal extends javax.swing.JFrame {
         });
 
         cmdMostrar.setText("Mostrar");
+        cmdMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdMostrarActionPerformed(evt);
+            }
+        });
 
         cmdLimpiar.setText("Limpiar");
+        cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -138,9 +153,9 @@ public class Principal extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Personas Ingresadas"));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtResultado.setColumns(20);
+        txtResultado.setRows(5);
+        jScrollPane1.setViewportView(txtResultado);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 36, 340, -1));
 
@@ -155,31 +170,60 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGuardarActionPerformed
-        // TODO add your handling code here:       
+        // TODO add your handling code here:
+        Persona p;
         long identificacion;
         String primer_nombre, primer_apellido;
-        
+
         identificacion = Long.parseLong(txtIdentificacion.getText());
         primer_nombre = txtPrimerNombre.getText();
         primer_apellido = txtPrimerApellido.getText();
-        
+
         p = new Persona(identificacion, primer_nombre, primer_apellido);
+        v.add(p);
+        cont = cont + 1;
         
+        JOptionPane.showMessageDialog(this, "Persona creada exitosamente");
+        txtIdentificacion.setText("");
+        txtPrimerNombre.setText("");
+        txtPrimerApellido.setText("");
+        txtIdentificacion.requestFocusInWindow();
+
     }//GEN-LAST:event_cmdGuardarActionPerformed
+
+    private void cmdMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMostrarActionPerformed
+        // TODO add your handling code here:
+        String aux;
+        for (int i = 0; i < v.size(); i++){
+        aux = "Persona No. "+ (i+1) + "\n"
+            + "Identificacion" + v.get(i).getIdentificacion() + "\n"
+            + "Primer Nombre" + v.get(i).getPrimer_nombre() + "\n"
+            + "Primer Apellido" + v.get(i).getPrimer_apellido() + "\n\n";
+        
+        txtResultado.append(aux);
+                
+                
+        }
+        
+    }//GEN-LAST:event_cmdMostrarActionPerformed
+
+    private void cmdLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimpiarActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,9 +273,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtIdentificacion;
     private javax.swing.JTextField txtPrimerApellido;
     private javax.swing.JTextField txtPrimerNombre;
+    private javax.swing.JTextArea txtResultado;
     // End of variables declaration//GEN-END:variables
 }
